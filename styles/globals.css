@@ -6,6 +6,18 @@
   box-sizing: border-box;
   margin: 0;
 }
+body{
+  overflow-x: hidden;
+  width: 100%;
+  scroll-behavior: smooth;
+  overflow-y: hidden;
+}
+html{
+  overflow-x: hidden;
+  width: 100%;
+  scroll-behavior: smooth;
+
+}
 @font-face {
   font-family: poppins500;
   src: url('./fonts/Poppins-Medium.ttf');
@@ -23,8 +35,8 @@
 }
 .hero-img{
   width: 100%;
-  height: 310px;
-  object-position: 20% 80%;
+  height: 270px;
+
 }
 .no-select {
   -webkit-touch-callout: none;/* iOS Safari */
@@ -34,4 +46,19 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently 
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* for box in advance stats */
+.box{
+  @apply bg-white w-[95%] pb-[3rem] pt-[5rem] -mt-[3rem]
+
+
+}
+
+
+/* for boost bg */
+.boost-bg{
+  background-image: url(/bg-boost-mobile.svg);
+  background-size: cover;
+  
 }

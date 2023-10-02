@@ -4,8 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 export default function Header(){
   const [openMenu, setopenMenu] = useState()
+  function handleMenu(){
+    if(!openMenu){
+      document.documentElement.style.overflow = 'hidden'
+    }else if (openMenu){
+      document.documentElement.style.overflow = 'scroll'
+    }
+     setopenMenu(!openMenu)
+  }
     return(
-        <div className="bg-red-100 h-[80px] w-full flex items-center  justify-between">
+        <div className="  header-container bg-white  h-[70px] w-full flex items-center  justify-between">
          <div className="pl-6">
             <Image src={'./logo.svg'}
               alt="logo"
@@ -14,7 +22,7 @@ export default function Header(){
             />
          </div>
 
-         <div className="link-wrapper absolute w-full top-[5rem] flex justify-center">
+         <div className="link-wrapper z-40 absolute w-full top-[3.2rem] flex justify-center">
           {/* come back here */}
             <div className={`links w-[90%] rounded-[10px] bg-dark-violet ${!openMenu ? 'h-0 transition-all duration-[.2s] ease-out' : 'h-[420px] transition-all duration-[.2s] ease-in'} overflow-y-hidden mt-[1rem] mb-[1rem] `}>
               <div className="mb-[2rem] mt-[1rem]">
@@ -37,8 +45,8 @@ export default function Header(){
          </div>
 
          {/* for burger menu */}
-         <div onClick={()=> setopenMenu(!openMenu)} className=" no-select burger laptop:hidden text-4xl text-Grayish-Violet pr-6">
-         <ion-icon name="menu"></ion-icon>
+         <div onClick={handleMenu} className=" no-select burger laptop:hidden text-4xl text-Grayish-Violet pr-6">
+         <ion-icon name={`${!openMenu ? 'menu': 'close'}`}></ion-icon>
          </div>
         </div>
     )

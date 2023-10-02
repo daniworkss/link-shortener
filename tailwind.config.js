@@ -19,6 +19,8 @@ module.exports = {
         'desktop': '1440px'
       },
       colors:{
+        // advance-stats color
+        'advancestat-bg':'#eff0f6',
         // primary
         'cyan': 'hsl(180, 66%, 49%)',
         'dark-violet': 'hsl(257, 27%, 26%)',
