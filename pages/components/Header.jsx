@@ -13,7 +13,7 @@ export default function Header(){
      setopenMenu(!openMenu)
   }
     return(
-        <div className="  header-container bg-white  h-[70px] w-full flex items-center  justify-between">
+        <div className="  header-container bg-inherit  h-[70px] w-full flex items-center  justify-between">
          <div className="pl-6">
             <Image src={'./logo.svg'}
               alt="logo"
