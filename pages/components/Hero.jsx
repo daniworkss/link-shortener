@@ -80,7 +80,6 @@ export default function Maincontent(){
 
 // use cliboard.js to copy the link
 useEffect(()=>{
-
 try {
 // .copy-button is the className of the button that is going to be used to copy the link to clipboard
 const clipboard = new ClipboardJS('.copy-button');
@@ -96,43 +95,55 @@ const clipboard = new ClipboardJS('.copy-button');
     console.error(error.message, 'failed to copy message')
 }
 },[]) 
+function scrolltoTarget(){
+  const targetEl = document.getElementById('target-element')
+  if (targetEl){
+    targetEl.scrollIntoView({behavior: 'smooth'})
+  }
+}
 return(
      <main>
-         <div className="hero-section bg-white pt-[2rem] flex flex-col laptop:flex-row gap-[1rem]">
-        <div className="flex justify-center w-full no-select">
-            <div className="w-full  h-[270px]">
-            <img className="hero-img ml-[3rem] laptop:static" src="./illustration-working.svg" alt="hero-image" />
+        <div className="laptop:flex laptop:w-full laptop:justify-center">
+        <div className="hero-section bg-white pt-[2rem] flex flex-col laptop:h-[400px] laptop:pl-4 laptop:pr-4 laptop:flex-row-reverse gap-[1rem]" style={{maxWidth: '1200px'}}>
+        <div className="flex justify-center w-full no-select laptop:-mr-[4rem]">
+            <div className="w-full  h-[270px] laptop:h-[320px]">
+            <img className="hero-img ml-[3rem] tablet:ml-[5rem] laptop:ml-0 laptop:static" src="./illustration-working.svg" alt="hero-image" />
             </div>
            
         </div>
-        <div className="hero-text">
-            <h1 className="text-[42px] leading-11 bold-font text-Vdark-Blue  text-center">More than just shorter links</h1>
-            <p className="text-[22px] pl-6 pr-6 mt-[.5rem] text-Grayish-Violet text-center">Build your brand&apos;s recognition and get detailed insights on how your links are performing.</p>
-           
-           <div className="w-full flex justify-center mt-[1.5rem] pb-8 no-select">
-           <Link href={'/'}className="bg-cyan no-select text-white bold-font text-[18px] pl-[3rem]  pr-[3rem] pt-[15px] pb-[15px] rounded-[25px]">Get Started</Link>
+        <div className="hero-text w-full ">
+            <div>
+            <h1 className="text-[42px] laptop:w-[70%] leading-11 laptop:leading-[70px] laptop:text-[52px] bold-font text-Vdark-Blue  text-center laptop:text-left tablet:mt-[7rem] laptop:mt-0">More than just shorter links</h1>
+            </div>
+
+           <div className="w-full flex justify-center laptop:justify-start">
+           <p className="text-[22px] pl-6 pr-6 mt-[.5rem] text-Grayish-Violet text-center laptop:text-left laptop:pl-0 laptop:pr-0 tablet:w-[80%]">Build your brand&apos;s recognition and get detailed insights on how your links are performing.</p>
+           </div>
+           <div className="w-full flex justify-center laptop:justify-start mt-[1.5rem] pb-8 no-select">
+           <Link href={'#link-container'} onClick={scrolltoTarget} className="bg-cyan no-select text-white bold-font text-[18px] pl-[3rem]  pr-[3rem] pt-[15px] pb-[15px] rounded-[25px] ">Get Started</Link>
            </div>
         </div>
       </div>
+        </div>
 
       {/* for shortening link */}
       <div className="link-wrapper mt-[2rem] flex justify-center ">
-        <div className="link-container flex flex-col justify-center pl-4 pr-4 gap-[1rem] bg-dark-violet rounded-[10px] w-[90%] h-[200px]">
-            <div className="flex flex-col w-full h-[80px]">
+        <div  className="link-container flex flex-col justify-center pl-4 pr-4 gap-[1rem] bg-dark-violet rounded-[10px] laptop:rounded-[5px] w-[90%] h-[200px] tablet:h-[220px] tablet:pl-6 tablet:pr-6 laptop:h-[120px] mt-[3rem] laptop:items-center laptop:flex-row" style={{maxWidth:'1080px'}}>
+            <div className="flex flex-col w-full h-[80px]" id='target-element'>
             <input style={{outline: 'none'}}
             ref={linkRef}
             value={linkValue}
              onChange={e => setlinkValue(e.target.value)}
              type="text" 
              placeholder="Shorten a link here"  
-             className={`pl-2 text-[18px] h-[60px]  rounded-[5px] regular-font text-Grayish-Violet`}
+             className={`pl-2 text-[18px] h-[60px]  rounded-[5px] regular-font text-Grayish-Violet laptop:w-full laptop:mt-2`}
              
              />
              <p className="italic-font text-[14px] text-red mt-[5px]">{errorMessage}</p>
             </div>
             <button
             onClick={handleSubmit}
-            className="bg-cyan bold-font no-select  text-white h-[60px] flex justify-center items-center text-[18px] rounded-[5px]"
+            className="bg-cyan bold-font laptop:w-[200px] no-select  text-white h-[60px] flex justify-center items-center text-[18px] rounded-[5px]"
              href={'/'}>
              {
                 loading ? 
@@ -145,22 +156,22 @@ return(
 
 
       {/* this container will hold all links in it  */}
-      <div className="bg-advancestat-bg pt-[8rem] -mt-[5rem]">
-        <div className="-mt-[1rem] h-[40px] mb-3 flex justify-center items-center regular-font text-Vdark-Blue">
+      <div className="bg-advancestat-bg pt-[8rem] -mt-[5rem] tablet:-mt-[7rem] laptop:-mt-[3rem]">
+        <div className="-mt-[1rem] h-[40px laptop:-mt-[3rem] laptop:text-[16px] mb-3 flex justify-center items-center regular-font text-Vdark-Blue">
             <p className={`${linkCopied ? 'block': 'hidden'}`}>Link Copied!</p>
         </div>
-      <div className="shortlinks-container w-full justify-center flex  flex-col items-center gap-[1.5rem]" >
+      <div className="shortlinks-container w-full justify-center flex  flex-col items-center gap-[1.5rem]" style={{margin: '0px auto', maxWidth: '1200px'}} >
        {
         shortenedLinkItems.map((items, i)=>(
-            <div key={i} className="bg-white w-[90%] shortened_link_box pl-3 pr-3 pt-8  h-[180px] rounded-[5px] flex flex-col gap-[1rem]">
-              <div className="flex flex-col gap-[1rem]">
+            <div key={i} className="bg-white w-[90%] shortened_link_box pl-3 pr-3 pt-8  laptop:justify-between h-[180px] rounded-[5px] flex flex-col gap-[1rem] laptop:h-[70px] laptop:flex-row laptop:items-center laptop:pt-0">
+              <div className="flex flex-col gap-[1rem] laptop:flex-row laptop:justify-between laptop:w-full">
               {/* div is used here to make an overflow in the css */}
               <div className="regular-font  overflow-div">{items.linkValue}</div>
-              <div className="line w-full h-[1px] bg-Gray"></div>
+              <div className="line w-full h-[1px] bg-Gray laptop:hidden"></div>
               {/* for new link */}
                <a className="regular-font text-cyan">{items.result_url}</a>
               </div>
-              <button data-clipboard-text={items.result_url}  className={`w-full bg-cyan copy-button text-white bold-font h-[45px]`}>
+              <button data-clipboard-text={items.result_url}  className={` laptop:w-[200px] w-full bg-cyan copy-button text-white bold-font h-[45px]`}>
                 Copy
               </button>
             </div>
@@ -169,8 +180,8 @@ return(
       </div>
       </div>
      <Advancestats/>
-     <div className=" boost-bg bg-dark-violet h-[350px] flex justify-center items-center flex-col gap-[1rem]">
-        <h1 className="text-white bold-font text-[24px]">Boost your links today</h1>
+     <div className=" boost-bg bg-dark-violet h-[250px]  laptop:h-[300px] flex justify-center items-center flex-col gap-[1rem]">
+        <h1 className="text-white bold-font text-[24px] tablet:text-[32px] tablet:mb-[.3rem]">Boost your links today</h1>
         <Link href={'/'} className="bg-cyan text-white regular-font pl-10 pr-10 pt-3 pb-3 rounded-[20px] no-select text-[18px]">
          Get Started
         </Link>
