@@ -27,9 +27,9 @@ export default function Header(){
             <div className={`links w-[90%] laptop:w-full laptop:justify-between rounded-[10px] bg-dark-violet laptop:h-[70px] laptop:items-center laptop:flex laptop:bg-inherit ${!openMenu ? 'h-0 transition-all duration-[.2s] ease-out' : 'h-[420px] transition-all duration-[.2s] ease-in'} overflow-y-hidden mt-[1rem] mb-[1rem] `}>
               <div className="mb-[2rem] mt-[1rem] laptop:mt-0 laptop:mb-0  laptop:ml-[2rem]">
                 <ul className="flex flex-col items-center pt-[1rem]  laptop:pt-0 laptop:flex-row laptop:text-Vdark-Blue laptop:text-[14px] text-white text-[18px] bold-font gap-[2rem] laptop-link">
-                  <Link href={'./'}>Features</Link>
-                  <Link href={'./'}>Pricing</Link>
-                  <Link href={'./'}>Resources</Link>
+                  <Link href={'./'} className="hover:text-cyan transition-colors duration-75">Features</Link>
+                  <Link href={'./'} className="hover:text-cyan transition-colors duration-75">Pricing</Link>
+                  <Link href={'./'} className="hover:text-cyan transition-colors duration-75">Resources</Link>
                 </ul>
               </div>
               <div className="w-full flex justify-center mb-[2rem] laptop:hidden">
@@ -37,8 +37,8 @@ export default function Header(){
               </div>
               <div className="flex justify-center pb-[4rem] laptop:pb-0 ">
                   <ul className="bold-font text-[18px] text-white flex-col flex gap-[2rem] items-center laptop:flex-row laptop:text-[14px]">
-                  <Link href={'./'} className='laptop:text-Vdark-Blue laptop-link hover:bold-font'>Login</Link>
-                  <Link href={'./'} className="bg-cyan w-[300px] h-[50px] flex items-center justify-center rounded-[20px] text-center laptop:w-[120px] laptop:h-[40px]">Signup</Link>
+                  <Link href={'./'} className='laptop:text-Vdark-Blue laptop-link hover:bold-font hover:text-cyan transition-colors ease-in duration-75'>Login</Link>
+                  <Link href={'./'} className="bg-cyan w-[300px] hover:opacity-[50%] transition-opacity duration-75 ease-in h-[50px] flex items-center justify-center rounded-[20px] text-center laptop:w-[120px] laptop:h-[40px]">Signup</Link>
                   </ul>
               </div>
             </div>

@@ -120,7 +120,7 @@ return(
            <p className="text-[22px] pl-6 pr-6 mt-[.5rem] text-Grayish-Violet text-center laptop:text-left laptop:pl-0 laptop:pr-0 tablet:w-[80%]">Build your brand&apos;s recognition and get detailed insights on how your links are performing.</p>
            </div>
            <div className="w-full flex justify-center laptop:justify-start mt-[1.5rem] pb-8 no-select">
-           <Link href={'#link-container'} onClick={scrolltoTarget} className="bg-cyan no-select text-white bold-font text-[18px] pl-[3rem]  pr-[3rem] pt-[15px] pb-[15px] rounded-[25px] ">Get Started</Link>
+           <Link href={'#link-container'} onClick={scrolltoTarget} className="bg-cyan  hover:opacity-[50%] transition-opacity duration-75 ease-in no-select text-white bold-font text-[18px] pl-[3rem]  pr-[3rem] pt-[15px] pb-[15px] rounded-[25px] ">Get Started</Link>
            </div>
         </div>
       </div>
@@ -182,9 +182,11 @@ return(
      <Advancestats/>
      <div className=" boost-bg bg-dark-violet h-[250px]  laptop:h-[300px] flex justify-center items-center flex-col gap-[1rem]">
         <h1 className="text-white bold-font text-[24px] tablet:text-[32px] tablet:mb-[.3rem]">Boost your links today</h1>
-        <Link href={'/'} className="bg-cyan text-white regular-font pl-10 pr-10 pt-3 pb-3 rounded-[20px] no-select text-[18px]">
+        <div>
+        <Link href={'/'} className="bg-cyan hover:p-[15px] transition-p duration-[.1s] ease-linear text-white regular-font pl-10 pr-10 pt-3 pb-3 rounded-[20px] no-select text-[18px]">
          Get Started
         </Link>
+        </div>
      </div>
      </main>
     )
