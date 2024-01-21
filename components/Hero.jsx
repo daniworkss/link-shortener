@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from "react"
+import React from "react"
 import Link from "next/link"
 import Advancestats from "./Advanced-stats"
 import axios from 'axios';
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { linkOptions } from "@/lib/api";
 import Loading from "./Loading-component";
 import ClipboardJS from "clipboard";
@@ -27,44 +27,40 @@ export default function Maincontent(){
    async function handleSubmit(){
     // this os to set the link copied text to be invisible while creating a new short link for the user
     setlinkCopied(false)
-        const encodedParams = new URLSearchParams();
-        // this passes the link in the input element i.e linkvalue into the new encodedParams variable it is then passed into the options to make 
+        const formData = new FormData();
+        // this passes the link in the input element i.e linkvalue into the new FormData variable it is then passed into the options to make 
         // a request
-        encodedParams.set('url', linkValue);
+       formData.append('url', linkValue);
 
         const options = {
             // link options is spread here. visit the lib api.js to view the contents of linkoptions
         ...linkOptions,
-        // from the encodedparams above
-        data: encodedParams,
+        // from the FormData above
+        data:formData,
         };
     //   it all starts from here
        if (linkValue.trim() !== ''){
         seterrorMessage('')
         linkRef.current.style.border = '0px'
-
             try {
-                const response = await axios.request(options);
                 // to enable loading component
                 setLoading(true)
-                setTimeout(()=>{
-                    // to disable loading component
-                    setLoading(false)
-                   const linkResponse=(response.data);
-
-                //object deconstruction to get just the new link and prevent errors
-                   let {result_url} = linkResponse
-                    const newItem = {
-                        linkValue,
-                        result_url
-                    }
+                const response = await axios.request(options);
+                setLoading(false)
+                const linkResponse=(response.data);
+                //object deconstruction to get just the new link
+                let {result_url} = linkResponse
+                const newItem = {
+                    linkValue,
+                    result_url
+                }
                     
-                    setshortenedLinkItems([...shortenedLinkItems, newItem])
-                    console.log(shortenedLinkItems)
-                    // empty the result url so you can generate new ones above
-                    result_url= ''
-                    setlinkValue('')
-                }, 3000)
+                setshortenedLinkItems([...shortenedLinkItems, newItem])
+                console.log(shortenedLinkItems)
+                // empty the result url so you can generate new ones above
+                result_url= ''
+                setlinkValue('')
+                
 
             } catch (error) {
                 console.error(error);
@@ -95,6 +91,7 @@ const clipboard = new ClipboardJS('.copy-button');
     console.error(error.message, 'failed to copy message')
 }
 },[]) 
+
 function scrolltoTarget(){
   const targetEl = document.getElementById('target-element')
   if (targetEl){
@@ -171,7 +168,7 @@ return(
               {/* for new link */}
                <a className="regular-font text-cyan">{items.result_url}</a>
               </div>
-              <button data-clipboard-text={items.result_url}  className={` laptop:w-[200px] w-full bg-cyan copy-button text-white bold-font h-[45px]`}>
+              <button data-clipboard-text={items.result_url}  className={` laptop:w-[200px] w-full bg-cyan copy-button pl-6 pr-6 rounded-[10px] text-white bold-font h-[45px]`}>
                 Copy
               </button>
             </div>
