@@ -69,33 +69,31 @@ export default function Maincontent(){
        } else{
         seterrorMessage('Please enter a valid url')
         linkRef.current.style.border = '1px solid red '
-        
-
        }
     }
 
-// // use cliboard.js to copy the link
-//   useEffect(()=>{
-//         try {
-//         // .copy-button is the className of the button that is going to be used to copy the link to clipboard
-//         const clipboard = new ClipboardJS('.copy-button');
-//             clipboard.on('success', () => {
-//                 // here user has successfully copied the text so set to true
-//                 setlinkCopied(true)
-//                 setlinkCopyMessage('Link Copied!!')
-//                 setTimeout(()=>{
-//                   setlinkCopied(false)
-//                 }, 2000)
-//               });
-//               return () => {
-//                 clipboard.destroy(); // Clean up when the component unmounts
-//               };
-//         } catch (error) {
-//             console.error(error.message, 'failed to copy message')
-//             setlinkCopyMessage('Something Went Wrong...')
+// use cliboard.js to copy the link
+  useEffect(()=>{
+        try {
+        // .copy-button is the className of the button that is going to be used to copy the link to clipboard
+        const clipboard = new ClipboardJS('.copy-button');
+            clipboard.on('success', () => {
+                // here user has successfully copied the text so set to true
+                setlinkCopied(true)
+                setlinkCopyMessage('Link Copied!!')
+                setTimeout(()=>{
+                  setlinkCopied(false)
+                }, 2000)
+              });
+              return () => {
+                clipboard.destroy(); // Clean up when the component unmounts
+              };
+        } catch (error) {
+            console.error(error.message, 'failed to copy message')
+            setlinkCopyMessage('Something Went Wrong...')
 
-//         }
-//   },[]) 
+        }
+  },[]) 
 
 return(
      <main>
@@ -137,7 +135,7 @@ return(
               
               />
             </div>
-             <p className="italic-font text-[14px] text-red mt-[5px]">{errorMessage}</p>
+             {/* <p className="italic-font text-[14px] text-red mt-[5px] ">{errorMessage}, hello nigga</p> */}
             </div>
             <button
             onClick={handleSubmit}
