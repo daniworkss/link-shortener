@@ -21,6 +21,7 @@ export default function Maincontent(){
 
    // this is to check if the user copied the text and show a message if the user has copied the text
    const [linkCopied, setlinkCopied] = useState(false)
+   const [linkCopyMessage, setlinkCopyMessage] = useState('')
  
 
 // to handle shortening the links passed in from the input 
@@ -75,29 +76,28 @@ export default function Maincontent(){
     }
 
 // use cliboard.js to copy the link
-useEffect(()=>{
-try {
-// .copy-button is the className of the button that is going to be used to copy the link to clipboard
-const clipboard = new ClipboardJS('.copy-button');
-    clipboard.on('success', (e) => {
-        console.log('List copied to clipboard:\n' + e.text);
-        // here user has successfully copied the text so set to true
-        setlinkCopied(true)
-      });
-      return () => {
-        clipboard.destroy(); // Clean up when the component unmounts
-      };
-} catch (error) {
-    console.error(error.message, 'failed to copy message')
-}
-},[]) 
+  useEffect(()=>{
+        try {
+        // .copy-button is the className of the button that is going to be used to copy the link to clipboard
+        const clipboard = new ClipboardJS('.copy-button');
+            clipboard.on('success', () => {
+                // here user has successfully copied the text so set to true
+                setlinkCopied(true)
+                setlinkCopyMessage('Link Copied!!')
+                setTimeout(()=>{
+                  setlinkCopied(false)
+                }, 2000)
+              });
+              return () => {
+                clipboard.destroy(); // Clean up when the component unmounts
+              };
+        } catch (error) {
+            console.error(error.message, 'failed to copy message')
+            setlinkCopyMessage('Something Went Wrong...')
 
-function scrolltoTarget(){
-  const targetEl = document.getElementById('target-element')
-  if (targetEl){
-    targetEl.scrollIntoView({behavior: 'smooth'})
-  }
-}
+        }
+  },[]) 
+
 return(
      <main>
         <div className="laptop:flex laptop:w-full laptop:justify-center">
@@ -117,7 +117,7 @@ return(
            <p className="text-[22px] pl-6 pr-6 mt-[.5rem] text-Grayish-Violet text-center laptop:text-left laptop:pl-0 laptop:pr-0 tablet:w-[80%]">Build your brand&apos;s recognition and get detailed insights on how your links are performing.</p>
            </div>
            <div className="w-full flex justify-center laptop:justify-start mt-[1.5rem] pb-8 no-select">
-           <Link href={'#link-container'} onClick={scrolltoTarget} className="bg-cyan  hover:opacity-[50%] transition-opacity duration-75 ease-in no-select text-white bold-font text-[18px] pl-[3rem]  pr-[3rem] pt-[15px] pb-[15px] rounded-[25px] ">Get Started</Link>
+           <Link href={'#target-element'} className="bg-cyan  hover:opacity-[50%] transition-opacity duration-75 ease-in no-select text-white bold-font text-[18px] pl-[3rem]  pr-[3rem] pt-[15px] pb-[15px] rounded-[25px] ">Get Started</Link>
            </div>
         </div>
       </div>
@@ -153,9 +153,11 @@ return(
 
 
       {/* this container will hold all links in it  */}
-      <div className="bg-advancestat-bg pt-[8rem] -mt-[5rem] tablet:-mt-[7rem] laptop:-mt-[3rem]">
-        <div className="-mt-[1rem] h-[40px laptop:-mt-[3rem] laptop:text-[16px] mb-3 flex justify-center items-center regular-font text-Vdark-Blue">
-            <p className={`${linkCopied ? 'block': 'hidden'}`}>Link Copied!</p>
+      <div className="bg-advancestat-bg pt-[8rem] -mt-[5rem] tablet:-mt-[7rem] laptop:-mt-[4rem] ">
+        <div className="h-[40px] w-full  flex items-center justify-center ">
+        <div className={` flex justify-center items-center ${ linkCopied ? 'h-[20px] transition-all duration-[.3s] ease-in' : 'h-0 overflow-hidden transition-all duration-[.3s] ease-out'}  laptop:text-[16px] mb-3 flex justify-center items-center regular-font text-Vdark-Blue`}>
+            <p>{linkCopyMessage}</p>
+        </div>
         </div>
       <div className="shortlinks-container w-full justify-center flex  flex-col items-center gap-[1.5rem]" style={{margin: '0px auto', maxWidth: '1200px'}} >
        {
