@@ -26,52 +26,46 @@ export default function Maincontent(){
 
 // to handle shortening the links passed in from the input 
    async function handleSubmit(){
-    // this os to set the link copied text to be invisible while creating a new short link for the user
+    // this is to set the link copied text to be invisible while creating a new short link for the user
     setlinkCopied(false)
-        const formData = new FormData();
-        // this passes the link in the input element i.e linkvalue into the new FormData variable it is then passed into the options to make 
-        // a request
-       formData.append('url', linkValue);
-
         const options = {
             // link options is spread here. visit the lib api.js to view the contents of linkoptions
         ...linkOptions,
-        // from the FormData above
-        data:formData,
-        };
+       data:{
+        url:linkValue,
+       }
+      };
     //   it all starts from here
-       if (linkValue.trim() !== ''){
+       if (linkValue.startsWith('https') || linkValue.startsWith('http')){
         seterrorMessage('')
         linkRef.current.style.border = '0px'
             try {
                 // to enable loading component
                 setLoading(true)
                 const response = await axios.request(options);
+                // to disable loading component
                 setLoading(false)
                 const linkResponse=(response.data);
                 //object deconstruction to get just the new link
-                let {result_url} = linkResponse
+                let {shortened} = linkResponse
                 const newItem = {
                     linkValue,
-                    result_url
-                }
-                    
+                    shortened
+                }    
                 setshortenedLinkItems([...shortenedLinkItems, newItem])
-                console.log(shortenedLinkItems)
                 // empty the result url so you can generate new ones above
-                result_url= ''
+                shortened=''
                 setlinkValue('')
                 
-
             } catch (error) {
-                console.error(error);
-                seterrorMessage('Something went wrong. Please enter a valid url')
-                linkRef.current.style.border = '2px solid red'
+              setLoading(false)
+              seterrorMessage('Something went wrong. Please try again')
+              linkRef.current.style.border = '1px solid red '
             }
            
        } else{
-        seterrorMessage('Please enter in a url')
-        linkRef.current.style.border = '2px solid red'
+        seterrorMessage('Please enter a valid url')
+        linkRef.current.style.border = '1px solid red '
        }
     }
 
@@ -126,22 +120,24 @@ return(
       {/* for shortening link */}
       <div className="link-wrapper mt-[2rem] flex justify-center ">
         <div  className="link-container flex flex-col justify-center pl-4 pr-4 gap-[1rem] bg-dark-violet rounded-[10px] laptop:rounded-[5px] w-[90%] h-[200px] tablet:h-[220px] tablet:pl-6 tablet:pr-6 laptop:h-[120px] mt-[3rem] laptop:items-center laptop:flex-row" style={{maxWidth:'1080px'}}>
-            <div className="flex flex-col w-full h-[80px]" id='target-element'>
-            <input style={{outline: 'none'}}
-            ref={linkRef}
-            value={linkValue}
-             onChange={e => setlinkValue(e.target.value)}
-             type="text" 
-             placeholder="Shorten a link here"  
-             className={`pl-2 text-[18px] h-[60px]  rounded-[5px] regular-font text-Grayish-Violet laptop:w-full laptop:mt-2`}
-             
-             />
+            <div className="flex flex-col w-full h-[80px] " id='target-element'>
+            <div className="h-[70px] w-full">
+              <input style={{outline: 'none'}}
+                ref={linkRef}
+                value={linkValue}
+                onChange={e => setlinkValue(e.target.value)}
+                type="text" 
+                placeholder="Shorten a link here"  
+                className={`pl-2 text-[18px] h-[60px] w-full laptop:h-[65px]  rounded-[5px] regular-font text-Grayish-Violet laptop:w-full laptop:mt-2`}
+              
+              />
+            </div>
              <p className="italic-font text-[14px] text-red mt-[5px]">{errorMessage}</p>
             </div>
             <button
             onClick={handleSubmit}
             className="bg-cyan bold-font laptop:w-[200px] no-select  text-white h-[60px] flex justify-center items-center text-[18px] rounded-[5px]"
-             href={'/'}>
+             >
              {
                 loading ? 
                 <Loading/> :
@@ -168,9 +164,9 @@ return(
               <div className="regular-font  overflow-div">{items.linkValue}</div>
               <div className="line w-full h-[1px] bg-Gray laptop:hidden"></div>
               {/* for new link */}
-               <a className="regular-font text-cyan">{items.result_url}</a>
+               <a className="regular-font text-cyan">{items.shortened}</a>
               </div>
-              <button data-clipboard-text={items.result_url}  className={` laptop:w-[200px] w-full bg-cyan copy-button pl-6 pr-6 rounded-[10px] text-white bold-font h-[45px]`}>
+              <button data-clipboard-text={items.shortened}  className={` laptop:w-[200px] w-full bg-cyan copy-button pl-6 pr-6 rounded-[10px] text-white bold-font h-[45px]`}>
                 Copy
               </button>
             </div>
