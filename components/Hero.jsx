@@ -69,6 +69,8 @@ export default function Maincontent(){
        } else{
         seterrorMessage('Please enter a valid url')
         linkRef.current.style.border = '1px solid red '
+        
+
        }
     }
 
