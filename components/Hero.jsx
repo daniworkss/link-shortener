@@ -53,14 +53,17 @@ export default function Maincontent(){
                     shortened
                 }    
                 setshortenedLinkItems([...shortenedLinkItems, newItem])
+                console.log(shortenedLinkItems)
                 // empty the result url so you can generate new ones above
                 shortened=''
                 setlinkValue('')
                 
+
             } catch (error) {
               setLoading(false)
-              seterrorMessage('Something went wrong. Please try again')
-              linkRef.current.style.border = '1px solid red '
+               console.log(error)
+                seterrorMessage('Something went wrong. Please try again')
+                linkRef.current.style.border = '1px solid red '
             }
            
        } else{
@@ -69,28 +72,28 @@ export default function Maincontent(){
        }
     }
 
-// use cliboard.js to copy the link
-  useEffect(()=>{
-        try {
-        // .copy-button is the className of the button that is going to be used to copy the link to clipboard
-        const clipboard = new ClipboardJS('.copy-button');
-            clipboard.on('success', () => {
-                // here user has successfully copied the text so set to true
-                setlinkCopied(true)
-                setlinkCopyMessage('Link Copied!!')
-                setTimeout(()=>{
-                  setlinkCopied(false)
-                }, 2000)
-              });
-              return () => {
-                clipboard.destroy(); // Clean up when the component unmounts
-              };
-        } catch (error) {
-            console.error(error.message, 'failed to copy message')
-            setlinkCopyMessage('Something Went Wrong...')
+// // use cliboard.js to copy the link
+//   useEffect(()=>{
+//         try {
+//         // .copy-button is the className of the button that is going to be used to copy the link to clipboard
+//         const clipboard = new ClipboardJS('.copy-button');
+//             clipboard.on('success', () => {
+//                 // here user has successfully copied the text so set to true
+//                 setlinkCopied(true)
+//                 setlinkCopyMessage('Link Copied!!')
+//                 setTimeout(()=>{
+//                   setlinkCopied(false)
+//                 }, 2000)
+//               });
+//               return () => {
+//                 clipboard.destroy(); // Clean up when the component unmounts
+//               };
+//         } catch (error) {
+//             console.error(error.message, 'failed to copy message')
+//             setlinkCopyMessage('Something Went Wrong...')
 
-        }
-  },[]) 
+//         }
+//   },[]) 
 
 return(
      <main>
@@ -137,7 +140,7 @@ return(
             <button
             onClick={handleSubmit}
             className="bg-cyan bold-font laptop:w-[200px] no-select  text-white h-[60px] flex justify-center items-center text-[18px] rounded-[5px]"
-             >
+             href={'/'}>
              {
                 loading ? 
                 <Loading/> :
