@@ -12,6 +12,7 @@ export default function Maincontent(){
 
    const [linkValue, setlinkValue] = useState('')
    const [errorMessage, seterrorMessage] = useState('')
+   const [showErrorMessage, setshowErrorMessage] = useState(false)
    //to hadle loading component
    const [loading, setLoading]= useState(false)
 //link ref to manipulate the input when no link is passed in
@@ -62,11 +63,14 @@ export default function Maincontent(){
             } catch (error) {
               setLoading(false)
                console.log(error)
+               setshowErrorMessage(true)
                 seterrorMessage('Something went wrong. Please try again')
                 linkRef.current.style.border = '1px solid red '
+
             }
            
        } else{
+        setshowErrorMessage(true)
         seterrorMessage('Please enter a valid url')
         linkRef.current.style.border = '1px solid red '
        }
@@ -135,7 +139,7 @@ return(
               
               />
             </div>
-             {/* <p className="italic-font text-[14px] text-red mt-[5px] ">{errorMessage}, hello nigga</p> */}
+              <p className={`italic-font text-[14px] text-red mt-[5px] ${showErrorMessage=== false ? 'hidden' : 'block'} `}>{errorMessage}</p>
             </div>
             <button
             onClick={handleSubmit}
@@ -152,7 +156,7 @@ return(
 
 
       {/* this container will hold all links in it  */}
-      <div className="bg-advancestat-bg pt-[8rem] -mt-[5rem] tablet:-mt-[7rem] laptop:-mt-[4rem] ">
+      <div className="bg-advancestat-bg pt-[6rem] -mt-[5rem] tablet:-mt-[7rem] laptop:-mt-[4rem] ">
         <div className="h-[40px] w-full  flex items-center justify-center ">
         <div className={` flex justify-center items-center ${ linkCopied ? 'h-[20px] transition-all duration-[.3s] ease-in' : 'h-0 overflow-hidden transition-all duration-[.3s] ease-out'}  laptop:text-[16px] mb-3 flex justify-center items-center regular-font text-Vdark-Blue`}>
             <p>{linkCopyMessage}</p>
